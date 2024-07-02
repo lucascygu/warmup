@@ -25,21 +25,18 @@ class Cstring:
         """
     string: list[str] = []
 
-    def __init__(self, lst: list[str] = None):
-        """
-        Initializes the Cstring with an optional list of characters.
+    class Cstring:
+        def __init__(self, lst: list[str] = None):
+            """
+            Initializes the Cstring with an optional list of characters.
 
-        Args:
-            lst (list[str], optional): A list of characters to initialize the string.
-                                       Defaults to None, which initializes an empty string.
-        """
-        if lst:
-            self.string = lst
-        else:
-            self.string = []
-        self.string.append('\0')
-
-        pass
+            Args:
+                lst (list[str], optional): A list of characters to initialize the string.
+                                           Defaults to None, which initializes an empty string.
+            """
+            self.string = lst if lst is not None else []
+            self.string.append('\0')
+            pass
 
     def at(self, index: int) -> str:
         """
