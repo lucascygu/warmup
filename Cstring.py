@@ -59,7 +59,7 @@ class Cstring:
         return self.string[index]
         pass
 
-    def string(self) -> str:
+    def nowstring(self) -> str:
         """
         Returns the Python string representation of the Cstring
 
