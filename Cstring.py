@@ -23,10 +23,7 @@ class Cstring:
     (list of "char" (str in python with only one character)): A list of characters representing the string with a
                                null character '\0' at the end.
         """
-    string: list[str] = []
-
-    class Cstring:
-        def __init__(self, lst: list[str] = None):
+    def __init__(self, lst: list[str] = None):
             """
             Initializes the Cstring with an optional list of characters.
 
@@ -54,7 +51,6 @@ class Cstring:
         if index < 0 or index >= len(self.string):
             raise IndexError("Index is out of the valid range")
         return self.string[index]
-        pass
 
     def nowstring(self) -> str:
         """
@@ -63,7 +59,7 @@ class Cstring:
         Returns:
             str: The string representation.
         """
-        pass
+        return ''.join(self.string[:-1])
 
     def newString(self) -> 'Cstring':
         """
