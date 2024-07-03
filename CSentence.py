@@ -1,6 +1,5 @@
 from Cstring import Cstring
 
-
 class CSentence:
     """
     A class to represent a sentence composed of multiple Cstring objects,
@@ -35,30 +34,3 @@ class CSentence:
             if i != len(self.string) - 1:
                 sentence += ' '
         return sentence
-
-    def __init__(self, cstrings: list[Cstring] = None):
-        """
-        Initializes the CSentence with an optional list of Cstring objects.
-
-        Args:
-            cstrings (list[Cstring], optional): A list of Cstring objects that make up the sentence.
-                                                Defaults to None, which will initialize an empty sentence.
-        """
-        self.string = cstrings if cstrings is not None else []
-        pass
-
-    def get_sentence(self) -> str:
-        """
-        Constructs and returns the sentence as a concatenated string of words.
-
-        Returns:
-            str: The full sentence constructed from the Cstring objects,
-                 where each word is separated by a space.
-        """
-        sentence = ''
-        for i in range(len(self.string)):
-            sentence += self.string[i].nowstring()
-            if i != len(self.string) - 1:
-                sentence += ' '
-        return sentence
-        pass

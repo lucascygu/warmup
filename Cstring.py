@@ -14,14 +14,10 @@ In C, the terminated character is "\0".
 In this Warmup project, you are required to mimic the behavior of C strings.
 """
 
-
-
-
 class Cstring:
     """
     A class to mimic a C-style string using Python list to handle characters,
-    (list of "char" (str in python with only one character)): A list of characters representing the string with a
-                               null character '\0' at the end.
+    (list of "char" (str in python with only one character)): A list of characters representing the string with a null character '\0' at the end.
         """
     def __init__(self, lst: list[str] = None):
             """
@@ -70,7 +66,7 @@ class Cstring:
         Returns:
             Cstring: A new instance of Cstring with the same content.
         """
-        new_string = Cstring(self.string)
+        new_string = Cstring(self.string[:-1])
         return new_string
         pass
 
@@ -98,7 +94,7 @@ class Cstring:
         Empties the Cstring
         """
 
-        self.string = []
+        self.string = ['\0']
         pass
 
     def length(self) -> int:
@@ -124,7 +120,7 @@ class Cstring:
         """
         if index < 0 or index > len(self.string):
             raise IndexError("Index is out of the valid range for insertion")
-        if type(char) == list:
+        if isinstance(char) == list:
             self.string = self.string[:index] + char + self.string[index:]
         else:
             self.string.insert(index, char)
@@ -170,5 +166,7 @@ class Cstring:
         Returns:
             int: The last index of the character, or -1 if not found.
         """
-        return self.string[::-1].index(char) if char in self.string else -1
-        pass
+        try:
+            return len(self.string) - 2 - self.string[::-1].index(char)
+        except ValueError:
+            return -1
