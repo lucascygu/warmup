@@ -166,7 +166,9 @@ class Cstring:
         Returns:
             int: The last index of the character, or -1 if not found.
         """
-        try:
-            return len(self.string) - 2 - self.string[::-1].index(char)
-        except ValueError:
-            return -1
+        # Start from the second to last character to ignore the null terminator
+        for i in range(len(self.string) - 2, -1, -1):
+            if self.string[i] == char:
+                return i
+        return -1
+        pass
