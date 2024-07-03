@@ -120,7 +120,7 @@ class Cstring:
         """
         if index < 0 or index > len(self.string):
             raise IndexError("Index is out of the valid range for insertion")
-        if isinstance(char) == list:
+        if isinstance(char,list):
             self.string = self.string[:index] + char + self.string[index:]
         else:
             self.string.insert(index, char)
