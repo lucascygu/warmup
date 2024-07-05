@@ -18,17 +18,17 @@ class Cstring:
     """
     A class to mimic a C-style string using Python list to handle characters,
     (list of "char" (str in python with only one character)): A list of characters representing the string with a null character '\0' at the end.
-        """
+    """
     def __init__(self, lst: list[str] = None):
-            """
-            Initializes the Cstring with an optional list of characters.
+        """
+        Initializes the Cstring with an optional list of characters.
 
-            Args:
-                lst (list[str], optional): A list of characters to initialize the string.
-                                           Defaults to None, which initializes an empty string.
-            """
-            self.string = lst if lst is not None else []
-            self.string.append('\0')
+        Args:
+            lst (list[str], optional): A list of characters to initialize the string.
+                                       Defaults to None, which initializes an empty string.
+        """
+        self.string = lst if lst is not None else []
+        self.string.append('\0')
 
     def at(self, index: int) -> str:
         """
@@ -59,9 +59,7 @@ class Cstring:
     def newString(self) -> 'Cstring':
         """
         Creates a new copy of the current Cstring.
-        """
 
-        """
         Returns:
             Cstring: A new instance of Cstring with the same content.
         """
@@ -83,6 +81,9 @@ class Cstring:
 
         Returns:
             str: The character that was removed from the beginning.
+
+        Raises:
+            IndexError: If the string is empty (excluding the null terminator).
         """
         if len(self.string) > 1:
             return self.string.pop(0)
@@ -92,7 +93,6 @@ class Cstring:
         """
         Empties the Cstring
         """
-
         self.string = ['\0']
 
     def length(self) -> int:
@@ -102,7 +102,7 @@ class Cstring:
         Returns:
             int: The length of the string.
         """
-        return len(self.string)-1
+        return len(self.string) - 1
 
     def insert(self, index: int, char) -> None:
         """
@@ -117,7 +117,7 @@ class Cstring:
         """
         if index < 0 or index > len(self.string):
             raise IndexError("Index is out of the valid range for insertion")
-        if isinstance(char,list):
+        if isinstance(char, list):
             self.string = self.string[:index] + char + self.string[index:]
         else:
             self.string.insert(index, char)
@@ -133,6 +133,7 @@ class Cstring:
         if index < 0 or index >= len(self.string):
             raise IndexError("Index is out of the valid range")
         self.string[index] = char
+
     def strstr(self, start_index: int, end_index: int) -> 'Cstring':
         """
         Extracts a substring from the Cstring and returns it as a new Cstring.
@@ -161,6 +162,7 @@ class Cstring:
         Returns:
             int: The last index of the character, or -1 if not found.
         """
+        # Start from the second to last character to ignore the null terminator
         for i in range(len(self.string) - 2, -1, -1):
             if self.string[i] == char:
                 return i
