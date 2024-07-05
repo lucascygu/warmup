@@ -13,7 +13,6 @@ thus the use of null-terminated character arrays (C strings) was a practical cho
 In C, the terminated character is "\0".
 In this Warmup project, you are required to mimic the behavior of C strings.
 """
-
 class Cstring:
     """
     A class to mimic a C-style string using Python list to handle characters,
@@ -66,103 +65,68 @@ class Cstring:
         new_string = Cstring(self.string[:-1])
         return new_string
 
-    def append(self, char: str) -> None:
+    def append(self, char: str):
         """
-        Appends a character to the end of the Cstring
+        Appends a character to the end of the Cstring.
 
         Args:
             char (str): The character to append.
         """
+        if len(char) != 1:
+            raise ValueError("Only single characters can be appended")
         self.string.insert(-1, char)
 
-    def pop(self) -> str:
+    def insert(self, index: int, char: str):
         """
-        Pops and returns the first character of the Cstring.
-
-        Returns:
-            str: The character that was removed from the beginning.
-
-        Raises:
-            IndexError: If the string is empty (excluding the null terminator).
-        """
-        if len(self.string) > 1:
-            return self.string.pop(0)
-        raise IndexError("Cannot pop from an empty string")
-
-    def empty(self) -> None:
-        """
-        Empties the Cstring
-        """
-        self.string = ['\0']
-
-    def length(self) -> int:
-        """
-        Returns the length of the Cstring
-
-        Returns:
-            int: The length of the string.
-        """
-        return len(self.string) - 1
-
-    def insert(self, index: int, char) -> None:
-        """
-        Inserts a character or a list of characters at a specified index.
+        Inserts a character at the specified index.
 
         Args:
-            index (int): The index at which to insert.
-            char (str | list[str]): The character or list of characters to insert.
-
-        Raises:
-            IndexError: If the index is out of the valid range for insertion.
+            index (int): The index at which to insert the character.
+            char (str): The character to insert.
         """
-        if index < 0 or index > len(self.string):
-            raise IndexError("Index is out of the valid range for insertion")
-        if isinstance(char, list):
-            self.string = self.string[:index] + char + self.string[index:]
-        else:
-            self.string.insert(index, char)
-
-    def replace(self, index: int, char: str) -> None:
-        """
-        Replaces the character at a specified index.
-
-        Args:
-            index (int): The index of the character to replace.
-            char (str): The new character to be placed at the specified index.
-        """
-        if index < 0 or index >= len(self.string):
+        if len(char) != 1:
+            raise ValueError("Only single characters can be inserted")
+        if index < 0 or index > len(self.string) - 1:
             raise IndexError("Index is out of the valid range")
-        self.string[index] = char
+        self.string.insert(index, char)
 
-    def strstr(self, start_index: int, end_index: int) -> 'Cstring':
+    def pop(self, index: int = -1) -> str:
         """
-        Extracts a substring from the Cstring and returns it as a new Cstring.
+        Removes and returns the character at the specified index.
 
         Args:
-            start_index (int): The starting index of the substring.
-            end_index (int): The ending index of the substring.
+            index (int, optional): The index of the character to remove. Defaults to -1 (the last character).
 
         Returns:
-            Cstring: The new Cstring containing the substring.
-
-        Raises:
-            IndexError: If either index is out of range.
+            str: The removed character.
         """
-        if start_index < 0 or end_index > len(self.string):
-            raise IndexError("Either start or end index is out of range.")
-        return Cstring(self.string[start_index:end_index])
+        if index < -len(self.string) or index >= len(self.string) - 1:
+            raise IndexError("Index is out of the valid range")
+        return self.string.pop(index)
 
-    def strrchr(self, char: str) -> int:
+    def replace(self, old: str, new: str):
         """
-        Returns the last index of the specified character in the Cstring.
+        Replaces all occurrences of a character with another character.
 
         Args:
-            char (str): The character to find.
+            old (str): The character to be replaced.
+            new (str): The character to replace with.
+        """
+        if len(old) != 1 or len(new) != 1:
+            raise ValueError("Only single characters can be replaced")
+        self.string = [new if char == old else char for char in self.string]
+
+    def strstr(self, substring: 'Cstring') -> int:
+        """
+        Finds the first occurrence of the substring in the Cstring.
+
+        Args:
+            substring (Cstring): The substring to find.
 
         Returns:
-            int: The last index of the character, or -1 if not found.
+            int: The index of the first occurrence of the substring, or -1 if not found.
         """
-        for i in range(len(self.string)- 2, -1, -1):
-            if self.string[i] == char:
-                return i
-        return -1
+        sub_str = substring.nowstring()
+        main_str = self.nowstring()
+        index = main_str.find(sub_str)
+        return index if index != -1 else -1
