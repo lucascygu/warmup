@@ -27,7 +27,7 @@ class Cstring:
                 lst (list[str], optional): A list of characters to initialize the string.
                                            Defaults to None, which initializes an empty string.
             """
-            self.lst = lst if lst is not None else []
+            self.string = lst if lst is not None else []
             self.string.append('\0')
 
     def at(self, index: int) -> str:
