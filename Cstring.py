@@ -13,6 +13,22 @@ thus the use of null-terminated character arrays (C strings) was a practical cho
 In C, the terminated character is "\0".
 In this Warmup project, you are required to mimic the behavior of C strings.
 """
+"""
+I&CS 33 Warm up Project
+Summer 2024
+Author: Chenhan Lyu
+
+When C was developed in the early 1970s,
+the computing environment was vastly different.
+Memory and processing power were both severely limited.
+C was developed alongside Unix, primarily by the same people,
+and its features were influenced by the needs and constraints of system programming in that context.
+Simplicity and efficiency were paramount,
+thus the use of null-terminated character arrays (C strings) was a practical choice.
+In C, the terminated character is "\0".
+In this Warmup project, you are required to mimic the behavior of C strings.
+"""
+
 class Cstring:
     """
     A class to mimic a C-style string using Python list to handle characters,
@@ -26,7 +42,8 @@ class Cstring:
             lst (list[str], optional): A list of characters to initialize the string.
                                        Defaults to None, which initializes an empty string.
         """
-        self.string = lst if lst is not None else []
+        self.lst = lst if lst is not None else []
+        self.string = self.lst[:]
         self.string.append('\0')
 
     def at(self, index: int) -> str:
@@ -130,3 +147,24 @@ class Cstring:
         main_str = self.nowstring()
         index = main_str.find(sub_str)
         return index if index != -1 else -1
+
+    def empty(self) -> None:
+        """
+        Empties the Cstring.
+        """
+        self.string = ['\0']
+
+    def strrchr(self, char: str) -> int:
+        """
+        Returns the last index of the specified character in the Cstring.
+
+        Args:
+            char (str): The character to find.
+
+        Returns:
+            int: The last index of the character, or -1 if not found.
+        """
+        for i in range(len(self.string) - 2, -1, -1):
+            if self.string[i] == char:
+                return i
+        return -1
