@@ -84,7 +84,9 @@ class Cstring:
         Returns:
             str: The character that was removed from the beginning.
         """
-        return self.string.pop(0)
+        if len(self.string) > 1:
+            return self.string.pop(0)
+        raise IndexError("Cannot pop from an empty string")
 
     def empty(self) -> None:
         """
@@ -128,8 +130,9 @@ class Cstring:
             index (int): The index of the character to replace.
             char (str): The new character to be placed at the specified index.
         """
+        if index < 0 or index >= len(self.string):
+            raise IndexError("Index is out of the valid range")
         self.string[index] = char
-
     def strstr(self, start_index: int, end_index: int) -> 'Cstring':
         """
         Extracts a substring from the Cstring and returns it as a new Cstring.
@@ -158,7 +161,6 @@ class Cstring:
         Returns:
             int: The last index of the character, or -1 if not found.
         """
-        # Start from the second to last character to ignore the null terminator
         for i in range(len(self.string) - 2, -1, -1):
             if self.string[i] == char:
                 return i
