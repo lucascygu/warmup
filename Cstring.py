@@ -14,22 +14,6 @@ In C, the terminated character is "\0".
 In this Warmup project, you are required to mimic the behavior of C strings.
 """
 
-"""
-I&CS 33 Warm up Project
-Summer 2024
-Author: Chenhan Lyu
-
-When C was developed in the early 1970s,
-the computing environment was vastly different.
-Memory and processing power were both severely limited.
-C was developed alongside Unix, primarily by the same people,
-and its features were influenced by the needs and constraints of system programming in that context.
-Simplicity and efficiency were paramount,
-thus the use of null-terminated character arrays (C strings) was a practical choice.
-In C, the terminated character is "\0".
-In this Warmup project, you are required to mimic the behavior of C strings.
-"""
-
 class Cstring:
     """
     A class to mimic a C-style string using Python list to handle characters,
@@ -139,6 +123,8 @@ class Cstring:
             old (str): The character to be replaced.
             new (str): The character to replace with.
         """
+        if not isinstance(old, str) or not isinstance(new, str):
+            raise ValueError("Both old and new must be strings")
         if len(old) != 1 or len(new) != 1:
             raise ValueError("Only single characters can be replaced")
         self.string = [new if char == old else char for char in self.string[:-1]]
