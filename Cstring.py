@@ -13,6 +13,7 @@ thus the use of null-terminated character arrays (C strings) was a practical cho
 In C, the terminated character is "\0".
 In this Warmup project, you are required to mimic the behavior of C strings.
 """
+
 """
 I&CS 33 Warm up Project
 Summer 2024
@@ -91,21 +92,30 @@ class Cstring:
         """
         if len(char) != 1:
             raise ValueError("Only single characters can be appended")
-        self.string.insert(-1, char)
+        self.string.insert(len(self.string) - 1, char)
 
-    def insert(self, index: int, char: str):
+    def insert(self, index: int, char: str | list[str]):
         """
-        Inserts a character at the specified index.
+        Inserts a character or a list of characters at the specified index.
 
         Args:
-            index (int): The index at which to insert the character.
-            char (str): The character to insert.
+            index (int): The index at which to insert the character(s).
+            char (str | list[str]): The character or list of characters to insert.
         """
-        if len(char) != 1:
-            raise ValueError("Only single characters can be inserted")
-        if index < 0 or index > len(self.string) - 1:
-            raise IndexError("Index is out of the valid range")
-        self.string.insert(index, char)
+        if isinstance(char, list):
+            if any(len(c) != 1 for c in char):
+                raise ValueError("All elements in the list must be single characters")
+            if index < 0 or index > len(self.string) - 1:
+                raise IndexError("Index is out of the valid range")
+            self.string = self.string[:index] + char + self.string[index:]
+        elif isinstance(char, str):
+            if len(char) != 1:
+                raise ValueError("Only single characters can be inserted")
+            if index < 0 or index > len(self.string) - 1:
+                raise IndexError("Index is out of the valid range")
+            self.string.insert(index, char)
+        else:
+            raise TypeError("char must be a str or list[str]")
 
     def pop(self, index: int = -1) -> str:
         """
