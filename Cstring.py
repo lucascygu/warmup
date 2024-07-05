@@ -141,7 +141,8 @@ class Cstring:
         """
         if len(old) != 1 or len(new) != 1:
             raise ValueError("Only single characters can be replaced")
-        self.string = [new if char == old else char for char in self.string]
+        self.string = [new if char == old else char for char in self.string[:-1]]
+        self.string.append('\0')
 
     def strstr(self, substring: 'Cstring') -> int:
         """
