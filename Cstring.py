@@ -29,7 +29,6 @@ class Cstring:
             """
             self.string = lst if lst is not None else []
             self.string.append('\0')
-            pass
 
     def at(self, index: int) -> str:
         """
@@ -68,7 +67,6 @@ class Cstring:
         """
         new_string = Cstring(self.string[:-1])
         return new_string
-        pass
 
     def append(self, char: str) -> None:
         """
@@ -78,7 +76,7 @@ class Cstring:
             char (str): The character to append.
         """
         self.string.insert(-1, char)
-        pass
+
     def pop(self) -> str:
         """
         Pops and returns the first character of the Cstring.
@@ -87,7 +85,6 @@ class Cstring:
             str: The character that was removed from the beginning.
         """
         return self.string.pop(0)
-        pass
 
     def empty(self) -> None:
         """
@@ -95,7 +92,6 @@ class Cstring:
         """
 
         self.string = ['\0']
-        pass
 
     def length(self) -> int:
         """
@@ -105,7 +101,6 @@ class Cstring:
             int: The length of the string.
         """
         return len(self.string)-1
-        pass
 
     def insert(self, index: int, char) -> None:
         """
@@ -124,7 +119,6 @@ class Cstring:
             self.string = self.string[:index] + char + self.string[index:]
         else:
             self.string.insert(index, char)
-        pass
 
     def replace(self, index: int, char: str) -> None:
         """
@@ -135,7 +129,6 @@ class Cstring:
             char (str): The new character to be placed at the specified index.
         """
         self.string[index] = char
-        pass
 
     def strstr(self, start_index: int, end_index: int) -> 'Cstring':
         """
@@ -154,7 +147,6 @@ class Cstring:
         if start_index < 0 or end_index > len(self.string):
             raise IndexError("Either start or end index is out of range.")
         return Cstring(self.string[start_index:end_index])
-        pass
 
     def strrchr(self, char: str) -> int:
         """
@@ -171,4 +163,3 @@ class Cstring:
             if self.string[i] == char:
                 return i
         return -1
-        pass
