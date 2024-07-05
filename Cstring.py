@@ -28,7 +28,7 @@ class Cstring:
                                        Defaults to None, which initializes an empty string.
         """
         self.string = lst if lst is not None else []
-        self.string.append['\0']
+        self.string.append('\0')
 
     def at(self, index: int) -> str:
         """
@@ -43,7 +43,7 @@ class Cstring:
         Raises:
             IndexError: If the index is out of the valid range
         """
-        if index < 0 or index >= len[self.string]:
+        if index < 0 or index >= len(self.string):
             raise IndexError("Index is out of the valid range")
         return self.string[index]
 
@@ -73,7 +73,7 @@ class Cstring:
         Args:
             char (str): The character to append.
         """
-        self.string.insert[-1, char]
+        self.string.insert(-1, char)
 
     def pop(self) -> str:
         """
@@ -85,8 +85,8 @@ class Cstring:
         Raises:
             IndexError: If the string is empty (excluding the null terminator).
         """
-        if len[self.string] > 1:
-            return self.string.pop[0]
+        if len(self.string) > 1:
+            return self.string.pop(0)
         raise IndexError("Cannot pop from an empty string")
 
     def empty(self) -> None:
@@ -102,7 +102,7 @@ class Cstring:
         Returns:
             int: The length of the string.
         """
-        return len[self.string] - 1
+        return len(self.string) - 1
 
     def insert(self, index: int, char) -> None:
         """
@@ -115,12 +115,12 @@ class Cstring:
         Raises:
             IndexError: If the index is out of the valid range for insertion.
         """
-        if index < 0 or index > len[self.string]:
+        if index < 0 or index > len(self.string):
             raise IndexError("Index is out of the valid range for insertion")
-        if isinstance[char, list]:
+        if isinstance(char, list):
             self.string = self.string[:index] + char + self.string[index:]
         else:
-            self.string.insert[index, char]
+            self.string.insert(index, char)
 
     def replace(self, index: int, char: str) -> None:
         """
@@ -130,7 +130,7 @@ class Cstring:
             index (int): The index of the character to replace.
             char (str): The new character to be placed at the specified index.
         """
-        if index < 0 or index >= len[self.string]:
+        if index < 0 or index >= len(self.string):
             raise IndexError("Index is out of the valid range")
         self.string[index] = char
 
@@ -148,7 +148,7 @@ class Cstring:
         Raises:
             IndexError: If either index is out of range.
         """
-        if start_index < 0 or end_index > len[self.string]:
+        if start_index < 0 or end_index > len(self.string):
             raise IndexError("Either start or end index is out of range.")
         return Cstring(self.string[start_index:end_index])
 
@@ -162,8 +162,7 @@ class Cstring:
         Returns:
             int: The last index of the character, or -1 if not found.
         """
-        # Start from the second to last character to ignore the null terminator
-        for i in range[len[self.string]- 2, -1, -1]:
+        for i in range(len(self.string)- 2, -1, -1):
             if self.string[i] == char:
                 return i
         return -1
