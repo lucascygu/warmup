@@ -163,10 +163,10 @@ class Cstring:
         Raises:
             IndexError: If either index is out of range.
         """
-        if start_index < 0 or end_index >= len(self.lst) or start_index > end_index:
+        if start_index < 0 or end_index > len(self.lst) or start_index >= end_index:
             raise IndexError("Index out of bounds")
-        return Cstring(self.lst[start_index:end_index + 1])
-
+        return Cstring(self.lst[start_index:end_index]) 
+        
     def strrchr(self, char: str) -> int:
         """
         Returns the last index of the specified character in the Cstring.
