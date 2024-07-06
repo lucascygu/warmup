@@ -28,6 +28,8 @@ class Cstring:
                                        Defaults to None, which initializes an empty string.
         """
         self.lst = lst if lst is not None else []
+        self.cstring = self.lst[:]
+        self.cstring.append('\0')
 
     def at(self, index: int) -> str:
         """
