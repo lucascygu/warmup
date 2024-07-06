@@ -28,8 +28,8 @@ class Cstring:
                                        Defaults to None, which initializes an empty string.
         """
         self.lst = lst if lst is not None else []
-        self.string = self.lst[:]
-        self.string.append('\0')
+        self.cstring = self.lst[:]
+        self.cstring.append('\0')
 
     def at(self, index: int) -> str:
         """
@@ -44,9 +44,9 @@ class Cstring:
         Raises:
             IndexError: If the index is out of the valid range
         """
-        if index < 0 or index >= len(self.string):
+        if index < 0 or index >= len(self.cstring):
             raise IndexError("Index is out of the valid range")
-        return self.string[index]
+        return self.cstring[index]
 
     def nowstring(self) -> str:
         """
@@ -55,7 +55,7 @@ class Cstring:
         Returns:
             str: The string representation.
         """
-        return ''.join(self.string[:-1])
+        return ''.join(self.cstring[:-1])
 
     def newString(self) -> 'Cstring':
         """
@@ -64,7 +64,7 @@ class Cstring:
         Returns:
             Cstring: A new instance of Cstring with the same content.
         """
-        new_string = Cstring(self.string[:-1])
+        new_string = Cstring(self.cstring[:-1])
         return new_string
 
     def append(self, char: str):
@@ -76,7 +76,7 @@ class Cstring:
         """
         if len(char) != 1:
             raise ValueError("Only single characters can be appended")
-        self.string.insert(len(self.string) - 1, char)
+        self.cstring.insert(len(self.cstring) - 1, char)
 
     def insert(self, index: int, char: str | list[str]):
         """
@@ -89,15 +89,15 @@ class Cstring:
         if isinstance(char, list):
             if any(len(c) != 1 for c in char):
                 raise ValueError("All elements in the list must be single characters")
-            if index < 0 or index > len(self.string) - 1:
+            if index < 0 or index > len(self.cstring) - 1:
                 raise IndexError("Index is out of the valid range")
-            self.string = self.string[:index] + char + self.string[index:]
+            self.cstring = self.cstring[:index] + char + self.cstring[index:]
         elif isinstance(char, str):
             if len(char) != 1:
                 raise ValueError("Only single characters can be inserted")
-            if index < 0 or index > len(self.string) - 1:
+            if index < 0 or index > len(self.cstring) - 1:
                 raise IndexError("Index is out of the valid range")
-            self.string.insert(index, char)
+            self.cstring.insert(index, char)
         else:
             raise TypeError("char must be a str or list[str]")
 
@@ -111,9 +111,9 @@ class Cstring:
         Returns:
             str: The removed character.
         """
-        if len(self.string) <= 1 or index < -len(self.string) or index >= len(self.string) - 1:
+        if len(self.cstring) <= 1 or index < -len(self.cstring) or index >= len(self.cstring) - 1:
             raise IndexError("Index is out of the valid range or null terminator cannot be removed")
-        return self.string.pop(index)
+        return self.cstring.pop(index)
 
     def replace(self, old: str, new: str):
         """
@@ -127,8 +127,8 @@ class Cstring:
             raise ValueError("Both 'old' and 'new' must be strings.")
         if len(old) != 1 or len(new) != 1:
             raise ValueError("Both 'old' and 'new' must be single characters.")
-        self.string = [new if char == old else char for char in self.string[:-1]]
-        self.string.append('\0')  # Ensure the null character is always at the end
+        self.cstring = [new if char == old else char for char in self.cstring[:-1]]
+        self.cstring.append('\0')  # Ensure the null character is always at the end
 
     def strstr(self, substring: 'Cstring') -> int:
         """
@@ -149,7 +149,7 @@ class Cstring:
         """
         Empties the Cstring.
         """
-        self.string = ['\0']
+        self.cstring = ['\0']
 
     def strrchr(self, char: str) -> int:
         """
@@ -161,7 +161,7 @@ class Cstring:
         Returns:
             int: The last index of the character, or -1 if not found.
         """
-        for i in range(len(self.string) - 2, -1, -1):
-            if self.string[i] == char:
+        for i in range(len(self.cstring) - 2, -1, -1):
+            if self.cstring[i] == char:
                 return i
         return -1
