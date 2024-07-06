@@ -19,7 +19,7 @@ class Cstring:
     A class to mimic a C-style string using Python list to handle characters,
     (list of "char" (str in python with only one character)): A list of characters representing the string with a null character '\0' at the end.
     """
-    def __init__(self, lst: list[str] = None):
+    def __init__(self, lst: list(str) = None):
         """
         Initializes the Cstring with an optional list of characters.
 
@@ -78,7 +78,7 @@ class Cstring:
             raise ValueError("Only single characters can be appended")
         self.string.insert(len(self.string) - 1, char)
 
-    def insert(self, index: int, char: str | list[str]):
+    def insert(self, index: int, char: str | list(str)):
         """
         Inserts a character or a list of characters at the specified index.
 
@@ -111,8 +111,8 @@ class Cstring:
         Returns:
             str: The removed character.
         """
-        if index < -len(self.string) or index >= len(self.string) - 1:
-            raise IndexError("Index is out of the valid range")
+        if len(self.string) <= 1 or index < -len(self.string) or index >= len(self.string) - 1:
+            raise IndexError("Index is out of the valid range or null terminator cannot be removed")
         return self.string.pop(index)
 
     def replace(self, old: str, new: str):
@@ -124,11 +124,11 @@ class Cstring:
             new (str): The character to replace with.
         """
         if not isinstance(old, str) or not isinstance(new, str):
-            raise ValueError("Both old and new must be strings")
+            raise ValueError("Both 'old' and 'new' must be strings.")
         if len(old) != 1 or len(new) != 1:
-            raise ValueError("Only single characters can be replaced")
+            raise ValueError("Both 'old' and 'new' must be single characters.")
         self.string = [new if char == old else char for char in self.string[:-1]]
-        self.string.append('\0')
+        self.string.append('\0')  # Ensure the null character is always at the end
 
     def strstr(self, substring: 'Cstring') -> int:
         """
