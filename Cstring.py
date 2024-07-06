@@ -19,7 +19,7 @@ class Cstring:
     A class to mimic a C-style string using Python list to handle characters,
     (list of "char" (str in python with only one character)): A list of characters representing the string with a null character '\0' at the end.
     """
-    def __init__(self, lst: list(str) = None):
+    def __init__(self, lst: list[str] = None):
         """
         Initializes the Cstring with an optional list of characters.
 
@@ -78,7 +78,7 @@ class Cstring:
             raise ValueError("Only single characters can be appended")
         self.string.insert(len(self.string) - 1, char)
 
-    def insert(self, index: int, char: str | list(str)):
+    def insert(self, index: int, char: str | list[str]):
         """
         Inserts a character or a list of characters at the specified index.
 
