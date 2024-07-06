@@ -34,7 +34,7 @@ class Cstring:
 
         if lst is None:
             lst = []
-        self.chars = lst + ['\0']  # Ensure null-terminated
+        self.lst = lst + ['\0']  # Ensure null-terminated
 
     def at(self, index: int) -> str:
         """
@@ -50,9 +50,9 @@ class Cstring:
             IndexError: If the index is out of the valid range
         """
 
-        if index < 0 or index >= len(self.chars) - 1:  # Exclude null terminator
+        if index < 0 or index >= len(self.lst) - 1:  # Exclude null terminator
             raise IndexError("Index out of bounds")
-        return self.chars[index]
+        return self.lst[index]
 
     def string(self) -> str:
         """
@@ -62,7 +62,7 @@ class Cstring:
             str: The string representation.
         """
 
-        return ''.join(self.chars[:-1])  # Exclude null terminator
+        return ''.join(self.lst[:-1])  # Exclude null terminator
 
     def newString(self) -> 'Cstring':
         """
@@ -72,7 +72,7 @@ class Cstring:
             Cstring: A new instance of Cstring with the same content.
         """
 
-        return Cstring(self.chars[:-1])  # Pass the characters excluding the null terminator
+        return Cstring(self.lst[:-1])  # Pass the characters excluding the null terminator
 
     def append(self, char: str) -> None:
         """
@@ -83,7 +83,7 @@ class Cstring:
         """
 
 
-        self.chars.insert(-1, char)  # Insert before the null terminator
+        self.lst.insert(-1, char)  # Insert before the null terminator
 
 
     def pop(self) -> str:
@@ -94,18 +94,18 @@ class Cstring:
             str: The character that was removed from the beginning.
         """
 
-        if len(self.chars) > 1:
-            return self.chars.pop(0)  # Remove the first character
+        if len(self.lst) > 1:
+            return self.lst.pop(0)  # Remove the first character
         raise IndexError("Pop from empty Cstring")
 
-
+    
 
     def empty(self) -> None:
         """
         Empties the Cstring
         """
 
-        self.chars = ['\0']
+        self.lst = ['\0']
 
     def length(self) -> int:
         """
@@ -116,7 +116,7 @@ class Cstring:
         """
 
 
-        return len(self.chars) - 1  # Exclude null terminator
+        return len(self.lst) - 1  # Exclude null terminator
 
     def insert(self, index: int, char) -> None:
         """
@@ -129,13 +129,13 @@ class Cstring:
         Raises:
             IndexError: If the index is out of the valid range for insertion.
         """
-        if index < 0 or index > len(self.chars) - 1:
+        if index < 0 or index > len(self.lst) - 1:
             raise IndexError("Index out of bounds for insertion")
         if isinstance(char, list):
             for i, ch in enumerate(char):
-                self.chars.insert(index + i, ch)
+                self.lst.insert(index + i, ch)
         else:
-            self.chars.insert(index, char)
+            self.lst.insert(index, char)
 
     def replace(self, index: int, char: str) -> None:
         """
@@ -145,9 +145,9 @@ class Cstring:
             index (int): The index of the character to replace.
             char (str): The new character to be placed at the specified index.
         """
-        if index < 0 or index >= len(self.chars) - 1:
+        if index < 0 or index >= len(self.lst) - 1:
             raise IndexError("Index out of bounds")
-        self.chars[index] = char
+        self.lst[index] = char
 
     def strstr(self, start_index: int, end_index: int) -> 'Cstring':
         """
@@ -163,9 +163,9 @@ class Cstring:
         Raises:
             IndexError: If either index is out of range.
         """
-        if start_index < 0 or end_index >= len(self.chars) or start_index > end_index:
+        if start_index < 0 or end_index >= len(self.lst) or start_index > end_index:
             raise IndexError("Index out of bounds")
-        return Cstring(self.chars[start_index:end_index + 1])
+        return Cstring(self.lst[start_index:end_index + 1])
 
     def strrchr(self, char: str) -> int:
         """
@@ -179,6 +179,6 @@ class Cstring:
         """
         try:
             # Reverse search, exclude the null terminator with [:-1]
-            return len(self.chars) - 2 - self.chars[-2::-1].index(char)
+            return len(self.lst) - 2 - self.lst[-2::-1].index(char)
         except ValueError:
             return -1
